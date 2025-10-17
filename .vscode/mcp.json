@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    },
+    "kbtg-ai-workshop-oct Docs": {
+      "type": "sse",
+      "url": "https://gitmcp.io/mikelopster/kbtg-ai-workshop-oct"
+    }
+  }
+}
