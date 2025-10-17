@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -20,6 +21,20 @@ type User struct {
 	UpdatedAt        time.Time `json:"updated_at"`
 }
 
+type Transfer struct {
+	ID        uint      `json:"id" gorm:"primaryKey"`
+	UserID    uint      `json:"user_id" gorm:"not null"`
+	Amount    int       `json:"amount" gorm:"not null"`
+	Timestamp time.Time `json:"timestamp" gorm:"autoCreateTime"`
+}
+
+type PointLedger struct {
+	ID        uint      `json:"id" gorm:"primaryKey"`
+	UserID    uint      `json:"user_id" gorm:"not null"`
+	Points    int       `json:"points" gorm:"not null"`
+	Timestamp time.Time `json:"timestamp" gorm:"autoCreateTime"`
+}
+
 var db *gorm.DB
 
 func InitDatabase() {
@@ -32,5 +47,11 @@ func InitDatabase() {
 	err = db.AutoMigrate(&User{})
 	if err != nil {
 		log.Fatal("Failed to migrate database:", err)
+	}
+
+	// Migrate the schema for Transfers and PointLedger
+	err = db.AutoMigrate(&Transfer{}, &PointLedger{})
+	if err != nil {
+		log.Fatal("Failed to migrate additional tables:", err)
 	}
 }
