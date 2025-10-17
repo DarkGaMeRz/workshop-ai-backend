@@ -24,7 +24,7 @@ erDiagram
         int amount
         string status
         string note
-        string idempotency_key UNIQUE
+        string idempotency_key UK
         datetime created_at
         datetime updated_at
         datetime completed_at
